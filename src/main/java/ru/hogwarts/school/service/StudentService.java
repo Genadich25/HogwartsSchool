@@ -2,39 +2,38 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
-    private Map<Long, Student> students = new HashMap<>();
-    private Long lastId = 0L;
 
-    public Student createStudent(Student student){
-        student.setId(++lastId);
-        students.put(lastId, student);
-        return student;
+    private final StudentRepository repository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.repository = studentRepository;
     }
 
-    public Student findStudent(Long id){
-        return students.get(id);
+    public Student createStudent(Student student){
+        return repository.save(student);
+    }
+
+    public Optional<Student> findStudent(Long id){
+        return repository.findById(id);
     }
 
     public Student editStudent(Student student){
-        students.put(student.getId(), student);
-        return student;
+        return repository.save(student);
     }
 
-    public Student deleteStudent(Long id){
-        return students.remove(id);
+    public void deleteStudent(Long id){
+        repository.deleteById(id);
     }
 
-    public Map<Long, Student> filterStudentByAge(int age){
-        return students.entrySet().stream()
-                .filter(students -> students.getValue().getAge() == age)
-                .collect(Collectors.toMap(k -> k.getValue().getId() , v -> v.getValue()));
+    public List<Student> filterStudentByAge(int age){
+        return repository.getStudentByAge(age);
 
     }
 }
