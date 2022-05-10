@@ -1,14 +1,19 @@
 package ru.hogwarts.school.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 public class Faculty {
     private String name;
     private String color;
+
+    @OneToMany(mappedBy = "faculty")
+    private List<Student> students;
 
     @Id
     @GeneratedValue
@@ -40,6 +45,15 @@ public class Faculty {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @JsonManagedReference
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     @Override
