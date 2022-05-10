@@ -40,7 +40,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudentByAge(int age){
+    public List<Student> getStudentByAge(@RequestParam int age){
         return service.filterStudentByAge(age);
     }
 }
