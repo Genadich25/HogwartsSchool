@@ -54,4 +54,5 @@ public class StudentController {
     public Faculty getFaculty(@PathVariable Long id){
         return service.getFaculty(id);
     }
+
 }
