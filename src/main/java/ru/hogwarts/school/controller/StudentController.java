@@ -102,6 +102,5 @@ public class StudentController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
-
     }
 }
