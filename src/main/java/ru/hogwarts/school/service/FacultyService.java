@@ -4,12 +4,13 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.service.Intetface.FacultyServiceInterface;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FacultyService {
+public class FacultyService implements FacultyServiceInterface {
     private final FacultyRepository repository;
 
     public FacultyService(FacultyRepository repository) {
