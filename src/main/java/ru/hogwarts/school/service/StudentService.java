@@ -46,4 +46,16 @@ public class StudentService implements StudentServiceInterface {
         Optional<Student> student = findStudent(id);
         return student.get().getFaculty();
     }
+
+    public Integer getStudentCount() {
+        return repository.getStudentCount();
+    }
+
+    public Double getAgeAvg() {
+        return repository.getAgeAvg();
+    }
+
+    public List<Student> getFiveLastStudents() {
+        return repository.getFiveLastStudents();
+    }
 }
