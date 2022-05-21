@@ -22,4 +22,9 @@ public interface StudentServiceInterface {
 
     public Faculty getFaculty(Long id);
 
+    public Integer getStudentCount();
+
+    public Double getAgeAvg();
+
+    public List<Student> getFiveLastStudents();
 }

@@ -102,5 +102,27 @@ public class StudentController {
             is.transferTo(os);
         }
     }
+
+    @GetMapping(value = "/avatars")
+    public ResponseEntity<List<Avatar>> getAvatarsByPage(@RequestParam("size") Integer pageSize, @RequestParam("page") Integer pageNumber) {
+        List<Avatar> avatars = avatarService.getAvatarsByPage(pageSize, pageNumber);
+        return ResponseEntity.ok(avatars);
+    }
+
+    @GetMapping(value = "/student-count")
+    public Integer getStudentCount(){
+        return service.getStudentCount();
+    }
+
+    @GetMapping(value = "/student-ageavg")
+    public Double getAgeAvg(){
+        return service.getAgeAvg();
+    }
+
+    @GetMapping(value = "/last-students")
+    public List<Student> getFiveLastStudents(){
+        return service.getFiveLastStudents();
+    }
+
 }
 
