@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
+import ru.hogwarts.school.service.Intetface.AvatarServiceInterface;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -20,7 +21,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
-public class AvatarService {
+public class AvatarService implements AvatarServiceInterface {
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 

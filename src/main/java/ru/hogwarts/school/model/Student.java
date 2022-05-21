@@ -16,7 +16,6 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-
     @Id
     @GeneratedValue
     private Long id;
