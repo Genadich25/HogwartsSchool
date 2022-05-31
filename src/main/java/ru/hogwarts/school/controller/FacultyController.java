@@ -63,4 +63,14 @@ public class FacultyController {
         return service.getStudents(id);
 
     }
+
+    @GetMapping("long-name")
+    public Optional<String> getLongNameFaculty(){
+        return service.getLongNameFaculty();
+    }
+
+    @GetMapping("iterate")
+    public Integer iterate(){
+        return service.getIterate();
+    }
 }
