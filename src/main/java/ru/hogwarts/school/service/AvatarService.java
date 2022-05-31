@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class AvatarService implements AvatarServiceInterface {
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     private final AvatarRepository repository;
     private final StudentService studentService;
 
@@ -40,7 +44,9 @@ public class AvatarService implements AvatarServiceInterface {
         Student student;
         if(oStudent.isPresent()){
             student = oStudent.get();
+            logger.info("Student with {} found", studentId);
         } else {
+            logger.error("There is not student with id {}", studentId);
             throw new NullPointerException();
         }
 
@@ -64,6 +70,7 @@ public class AvatarService implements AvatarServiceInterface {
         avatar.setData(generateImage(filePath));
 
         repository.save(avatar);
+        logger.info("Avatar save in repository");
     }
 
     private byte[] generateImage(Path filePath) throws IOException {
@@ -79,16 +86,19 @@ public class AvatarService implements AvatarServiceInterface {
             graphics.dispose();
 
             ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
+            logger.debug("Preview is generated");
             return baos.toByteArray();
         }
     }
 
     public Avatar findAvatar(Long studentId){
+        logger.debug("Find avatar with {}", studentId);
         return repository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     public List<Avatar> getAvatarsByPage(Integer pageSize, Integer pageNumber) {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        logger.debug("Pages created");
         return repository.findAll(pageRequest).getContent();
     }
 
