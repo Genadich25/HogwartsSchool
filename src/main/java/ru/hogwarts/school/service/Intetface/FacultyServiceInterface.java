@@ -24,4 +24,7 @@ public interface FacultyServiceInterface {
 
     public List<Student> getStudents(Long id);
 
+    Optional<String> getLongNameFaculty();
+
+    Integer getIterate();
 }

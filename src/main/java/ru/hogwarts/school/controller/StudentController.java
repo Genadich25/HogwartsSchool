@@ -124,5 +124,14 @@ public class StudentController {
         return service.getFiveLastStudents();
     }
 
+    @GetMapping(value = "/find-students-by-char")
+    public List<Student> findByStudentsByChar(@RequestParam String symbol){
+        return service.findByStudentsByChar(symbol);
+    }
+
+    @GetMapping(value = "/avg-age")
+    public Double getAvgAgeWithStream(){
+        return service.getAvgAgeWithStream();
+    }
 }
 

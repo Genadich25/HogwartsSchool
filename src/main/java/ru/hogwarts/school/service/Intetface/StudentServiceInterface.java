@@ -27,4 +27,8 @@ public interface StudentServiceInterface {
     public Double getAgeAvg();
 
     public List<Student> getFiveLastStudents();
+
+    List<Student> findByStudentsByChar(String symbol);
+
+    Double getAvgAgeWithStream();
 }

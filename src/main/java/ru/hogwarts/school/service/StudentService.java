@@ -8,8 +8,11 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.Intetface.StudentServiceInterface;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService implements StudentServiceInterface {
@@ -71,5 +74,23 @@ public class StudentService implements StudentServiceInterface {
     public List<Student> getFiveLastStudents() {
         logger.info("Get five last students");
         return repository.getFiveLastStudents();
+    }
+
+    @Override
+    public List<Student> findByStudentsByChar(String symbol) {
+        List<Student> students = repository.findAll();
+        return students.stream()
+                .parallel()
+                .map(student -> (Student)student)
+                .filter(student -> student.getName().startsWith(symbol))
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getAvgAgeWithStream() {
+        List<Student> students = repository.findAll();
+        return students.stream()
+                .collect(Collectors.averagingInt(Student::getAge));
     }
 }
