@@ -133,5 +133,17 @@ public class StudentController {
     public Double getAvgAgeWithStream(){
         return service.getAvgAgeWithStream();
     }
+
+    @GetMapping(value = "student-thread")
+    public ResponseEntity getListStudentsWithThread(){
+        service.getListStudentsWithThread();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "student-thread-synchronized")
+    public ResponseEntity getListStudentsWithSynchronizedThread(){
+        service.getListStudentsSynchronizedWithThread();
+        return ResponseEntity.ok().build();
+    }
 }
 
