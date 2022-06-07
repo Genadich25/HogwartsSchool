@@ -78,4 +78,5 @@ public class FacultyService implements FacultyServiceInterface {
                 .limit(1_000_000)
                 .reduce(0, Integer::sum);
     }
+
 }

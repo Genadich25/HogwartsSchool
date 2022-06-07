@@ -28,7 +28,11 @@ public interface StudentServiceInterface {
 
     public List<Student> getFiveLastStudents();
 
-    List<Student> findByStudentsByChar(String symbol);
+    public List<Student> findByStudentsByChar(String symbol);
 
-    Double getAvgAgeWithStream();
+    public Double getAvgAgeWithStream();
+
+    public void getListStudentsWithThread();
+
+    public void getListStudentsSynchronizedWithThread();
 }

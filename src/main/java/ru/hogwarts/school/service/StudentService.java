@@ -11,13 +11,14 @@ import ru.hogwarts.school.service.Intetface.StudentServiceInterface;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService implements StudentServiceInterface {
 
     private final StudentRepository repository;
+
+    private final Object flag = new Object();
 
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
@@ -76,7 +77,6 @@ public class StudentService implements StudentServiceInterface {
         return repository.getFiveLastStudents();
     }
 
-    @Override
     public List<Student> findByStudentsByChar(String symbol) {
         List<Student> students = repository.findAll();
         return students.stream()
@@ -87,10 +87,53 @@ public class StudentService implements StudentServiceInterface {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public Double getAvgAgeWithStream() {
         List<Student> students = repository.findAll();
         return students.stream()
                 .collect(Collectors.averagingInt(Student::getAge));
+    }
+
+    public void getListStudentsWithThread() {
+        List<Student> students = repository.findAll();
+
+        System.out.println(students.get(0).getName());
+        System.out.println(students.get(1).getName());
+
+        Thread thread1 = new Thread(() -> {
+            System.out.println(students.get(2).getName());
+            System.out.println(students.get(3).getName());
+        });
+        thread1.start();
+
+        Thread thread2 = new Thread(() -> {
+            System.out.println(students.get(4).getName());
+            System.out.println(students.get(5).getName());
+        });
+        thread2.start();
+    }
+
+    public void getListStudentsSynchronizedWithThread() {
+        List<Student> students = repository.findAll();
+
+        print(students.get(0).getName());
+        print(students.get(1).getName());
+
+        new Thread(() -> {
+            synchronized (flag){
+                print(students.get(2).getName());
+                print(students.get(3).getName());
+            }
+        }).start();
+
+        new Thread(() -> {
+            synchronized (flag){
+                print(students.get(4).getName());
+                print(students.get(5).getName());
+            }
+        }).start();
+
+    }
+    private void print(String name){
+        System.out.println("Name: " + name);
     }
 }
